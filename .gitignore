@@ -1,2 +1,6 @@
 target/
 exercises/progress.db
+
+# devcontainer
+.devcontainer/dev/root/.bash_history
+.devcontainer/dev/root/.bashrc

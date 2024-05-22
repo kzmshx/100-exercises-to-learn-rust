@@ -1,0 +1,12 @@
+services:
+  dev:
+    image: mcr.microsoft.com/devcontainers/rust:1-bookworm
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+      - ./dev/root/.bash_history:/root/.bash_history:cached
+      - ./dev/root/.bashrc:/root/.bashrc:cached
+    networks:
+      net:
+networks:
+  net:
