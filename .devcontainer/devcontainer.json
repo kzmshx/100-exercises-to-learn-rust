@@ -1,0 +1,45 @@
+{
+  "name": "rust-exercises",
+
+  /** Container configurations */
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [],
+  "remoteUser": "root",
+
+  /** Customizations */
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml"
+      ],
+      "settings": {
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        },
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+        "editor.codeActionsOnSave": {
+          "quickFix.biome": "explicit",
+          "source.fixAll": "explicit",
+          "source.organizeImports.biome": "explicit"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": false
+      }
+    }
+  },
+
+  /** Lifecycle hooks */
+  "initializeCommand": "bash .devcontainer/.hooks/initialize.sh"
+}
