@@ -3,47 +3,100 @@
 //   Even better, extract that logic and reuse it in both places. You can use
 //   private functions or private static methods for that.
 
+struct TicketTitle {
+    value: String,
+}
+
+impl TicketTitle {
+    fn new(value: String) -> TicketTitle {
+        if value.is_empty() {
+            panic!("Title cannot be empty");
+        }
+        if value.len() > 50 {
+            panic!("Title cannot be longer than 50 bytes");
+        }
+        TicketTitle { value }
+    }
+
+    fn value(&self) -> &String {
+        &self.value
+    }
+}
+
+struct TicketDescription {
+    value: String,
+}
+
+impl TicketDescription {
+    fn new(value: String) -> TicketDescription {
+        if value.is_empty() {
+            panic!("Description cannot be empty");
+        }
+        if value.len() > 500 {
+            panic!("Description cannot be longer than 500 bytes");
+        }
+        TicketDescription { value }
+    }
+
+    fn value(&self) -> &String {
+        &self.value
+    }
+}
+
+struct TicketStatus {
+    value: String,
+}
+
+impl TicketStatus {
+    fn new(value: String) -> TicketStatus {
+        if value != "To-Do" && value != "In Progress" && value != "Done" {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
+        TicketStatus { value }
+    }
+
+    fn value(&self) -> &String {
+        &self.value
+    }
+}
+
 pub struct Ticket {
-    title: String,
-    description: String,
-    status: String,
+    title: TicketTitle,
+    description: TicketDescription,
+    status: TicketStatus,
 }
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 bytes");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
-
         Ticket {
-            title,
-            description,
-            status,
+            title: TicketTitle::new(title),
+            description: TicketDescription::new(description),
+            status: TicketStatus::new(status),
         }
     }
 
     pub fn title(&self) -> &String {
-        &self.title
+        &self.title.value()
+    }
+
+    pub fn set_title(&mut self, value: String) {
+        self.title = TicketTitle::new(value);
     }
 
     pub fn description(&self) -> &String {
-        &self.description
+        &self.description.value()
+    }
+
+    pub fn set_description(&mut self, value: String) {
+        self.description = TicketDescription::new(value);
     }
 
     pub fn status(&self) -> &String {
-        &self.status
+        &self.status.value()
+    }
+
+    pub fn set_status(&mut self, value: String) {
+        self.status = TicketStatus::new(value);
     }
 }
 
