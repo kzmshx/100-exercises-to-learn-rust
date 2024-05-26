@@ -6,7 +6,7 @@ This course will teach you Rust's core concepts, one exercise at a time.\
 You'll learn about Rust's syntax, its type system, its standard library, and its ecosystem.
 
 We don't assume any prior knowledge of Rust, but we assume you know at least
-another programming language.\
+another programming language.
 We also don't assume any prior knowledge of systems programming or memory management. Those
 topics will be covered in the course.
 
@@ -87,10 +87,6 @@ Don't move on to the next section until you've solved the exercise for the curre
 > so you can easily track your progress and "restart" from a known point if needed.
 
 Enjoy the course!
-
-## References
-
-- The exercise for this section is located in `exercises/01_intro/00_welcome`
 
 ## Author
 

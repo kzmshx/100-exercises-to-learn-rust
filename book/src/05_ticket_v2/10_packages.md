@@ -61,7 +61,3 @@ binary crate inside. If you want to create a library crate instead, you can use 
 ```bash
 cargo new my-library --lib
 ```
-
-## References
-
-- The exercise for this section is located in `exercises/05_ticket_v2/10_packages`

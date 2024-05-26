@@ -111,7 +111,3 @@ struct MyStruct {
     field: u32,
 }
 ```
-
-## References
-
-- The exercise for this section is located in `exercises/04_traits/12_copy`

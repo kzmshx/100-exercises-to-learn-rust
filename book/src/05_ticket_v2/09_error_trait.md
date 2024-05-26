@@ -50,7 +50,3 @@ The difference is in their _purpose_: `Display` returns a representation that's 
 while `Debug` provides a low-level representation that's more suitable to developers and service operators.\
 That's why `Debug` can be automatically implemented using the `#[derive(Debug)]` attribute, while `Display`
 **requires** a manual implementation.
-
-## References
-
-- The exercise for this section is located in `exercises/05_ticket_v2/09_error_trait`

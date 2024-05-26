@@ -50,7 +50,3 @@ error[E0184]: the trait `Copy` cannot be implemented for this type; the type has
 2 | #[derive(Clone, Copy)]
   |                 ^^^^ `Copy` not allowed on types with destructors
 ```
-
-## References
-
-- The exercise for this section is located in `exercises/04_traits/13_drop`

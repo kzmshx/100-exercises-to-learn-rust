@@ -86,7 +86,3 @@ match status {
     }
 }
 ```
-
-## References
-
-- The exercise for this section is located in `exercises/05_ticket_v2/03_variants_with_data`

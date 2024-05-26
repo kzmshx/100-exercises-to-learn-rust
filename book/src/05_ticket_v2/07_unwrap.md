@@ -38,7 +38,3 @@ When you call a function that returns a `Result`, you have two key options:
       Err(err) => eprintln!("Error: {}", err),
   }
   ```
-
-## References
-
-- The exercise for this section is located in `exercises/05_ticket_v2/07_unwrap`
