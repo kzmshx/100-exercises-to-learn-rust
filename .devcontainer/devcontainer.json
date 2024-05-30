@@ -35,7 +35,9 @@
         },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
-        "editor.insertSpaces": false
+        "editor.insertSpaces": false,
+        "rust-analyzer.checkOnSave": true,
+        "rust-analyzer.check.command": "clippy"
       }
     }
   },
