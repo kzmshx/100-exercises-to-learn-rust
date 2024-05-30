@@ -2,13 +2,60 @@
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    return Ticket {
+        title: TicketTitle::new(title).unwrap(),
+        description: TicketDescription::new(description)
+            .unwrap_or(TicketDescription("Description not provided".to_string())),
+        status,
+    };
+}
+
+#[derive(Clone, Debug, PartialEq)]
+struct TicketTitle(String);
+
+impl TicketTitle {
+    fn new(title: String) -> Result<Self, String> {
+        if title.is_empty() {
+            return Err("Title cannot be empty".to_string());
+        }
+        if title.len() > 50 {
+            return Err("Title cannot be longer than 50 bytes".to_string());
+        }
+        Ok(TicketTitle(title))
+    }
+}
+
+impl PartialEq<&str> for TicketTitle {
+    fn eq(&self, other: &&str) -> bool {
+        self.0 == *other
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+struct TicketDescription(String);
+
+impl TicketDescription {
+    fn new(description: String) -> Result<Self, String> {
+        if description.is_empty() {
+            return Err("Description cannot be empty".to_string());
+        }
+        if description.len() > 500 {
+            return Err("Description cannot be longer than 500 bytes".to_string());
+        }
+        Ok(TicketDescription(description))
+    }
+}
+
+impl PartialEq<&str> for TicketDescription {
+    fn eq(&self, other: &&str) -> bool {
+        self.0 == *other
+    }
 }
 
 #[derive(Debug, PartialEq, Clone)]
 struct Ticket {
-    title: String,
-    description: String,
+    title: TicketTitle,
+    description: TicketDescription,
     status: Status,
 }
 
@@ -21,22 +68,15 @@ enum Status {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: Status) -> Result<Ticket, String> {
-        if title.is_empty() {
-            return Err("Title cannot be empty".to_string());
+        if let Err(e) = TicketTitle::new(title.clone()) {
+            return Err(e);
         }
-        if title.len() > 50 {
-            return Err("Title cannot be longer than 50 bytes".to_string());
+        if let Err(e) = TicketDescription::new(description.clone()) {
+            return Err(e);
         }
-        if description.is_empty() {
-            return Err("Description cannot be empty".to_string());
-        }
-        if description.len() > 500 {
-            return Err("Description cannot be longer than 500 bytes".to_string());
-        }
-
         Ok(Ticket {
-            title,
-            description,
+            title: TicketTitle(title),
+            description: TicketDescription(description),
             status,
         })
     }
