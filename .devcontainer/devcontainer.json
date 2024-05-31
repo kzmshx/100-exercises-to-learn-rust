@@ -43,5 +43,6 @@
   },
 
   /** Lifecycle hooks */
-  "initializeCommand": "bash .devcontainer/.hooks/initialize.sh"
+  "initializeCommand": "bash .devcontainer/.hooks/initialize.sh",
+  "postCreateCommand": "bash .devcontainer/.hooks/post-create.sh"
 }
