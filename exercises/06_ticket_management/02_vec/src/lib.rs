@@ -15,7 +15,21 @@ pub fn fibonacci(n: u32) -> u32 {
     //
     // Hint: use a `Vec` to memoize the results you have already calculated
     // so that you don't have to recalculate them several times.
-    todo!()
+    fib(n, &mut vec![0, 1])
+}
+
+fn fib(n: u32, memo: &mut Vec<u32>) -> u32 {
+    if memo.len() < 2 {
+        panic!("Memoization vector must have initial 2 elements");
+    }
+    match n as usize {
+        i if i < memo.len() => memo[i],
+        _ => {
+            let result = fib(n - 1, memo) + fib(n - 2, memo);
+            memo.push(result);
+            result
+        }
+    }
 }
 
 #[cfg(test)]
