@@ -33,6 +33,13 @@
           "source.fixAll": "explicit",
           "source.organizeImports.biome": "explicit"
         },
+        "github.copilot.enable": {
+          "*": true,
+          "markdown": false,
+          "plaintext": false,
+          "rust": false,
+          "scminput": false
+        },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
         "editor.insertSpaces": false,
