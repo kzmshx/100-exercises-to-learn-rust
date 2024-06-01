@@ -1,9 +1,10 @@
 use ticket_fields::{TicketDescription, TicketTitle};
 
-// TODO: Implement the `IntoIterator` trait for `&TicketStore` so that the test compiles and passes.
-#[derive(Clone)]
-pub struct TicketStore {
-    tickets: Vec<Ticket>,
+#[derive(Clone, Debug, Copy, PartialEq)]
+pub enum Status {
+    ToDo,
+    InProgress,
+    Done,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -13,11 +14,10 @@ pub struct Ticket {
     pub status: Status,
 }
 
-#[derive(Clone, Debug, Copy, PartialEq)]
-pub enum Status {
-    ToDo,
-    InProgress,
-    Done,
+// TODO: Implement the `IntoIterator` trait for `&TicketStore` so that the test compiles and passes.
+#[derive(Clone)]
+pub struct TicketStore {
+    tickets: Vec<Ticket>,
 }
 
 impl TicketStore {
@@ -32,6 +32,15 @@ impl TicketStore {
     }
 
     pub fn iter(&self) -> std::slice::Iter<Ticket> {
+        self.tickets.iter()
+    }
+}
+
+impl<'a> IntoIterator for &'a TicketStore {
+    type Item = &'a Ticket;
+    type IntoIter = std::slice::Iter<'a, Ticket>;
+
+    fn into_iter(self) -> Self::IntoIter {
         self.tickets.iter()
     }
 }
