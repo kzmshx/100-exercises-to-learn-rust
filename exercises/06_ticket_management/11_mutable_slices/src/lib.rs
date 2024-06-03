@@ -2,6 +2,10 @@
 //  modifying the input in place.
 //  Does it need to take a `&mut String`? Does a `&mut [str]` work? Why or why not?
 
+fn lowercase(str: &mut str) {
+    str.make_ascii_lowercase();
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
