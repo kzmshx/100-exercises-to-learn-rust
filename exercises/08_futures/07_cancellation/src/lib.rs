@@ -9,6 +9,7 @@ pub async fn run(listener: TcpListener, n_messages: usize, timeout: Duration) ->
     for _ in 0..n_messages {
         let (mut stream, _) = listener.accept().await.unwrap();
         let _ = tokio::time::timeout(timeout, async {
+            // bytes from stream are appendend to buffer
             stream.read_to_end(&mut buffer).await.unwrap();
         })
         .await;
@@ -27,7 +28,7 @@ mod tests {
         let addr = listener.local_addr().unwrap();
         let messages = vec!["hello", "from", "this", "task"];
         let timeout = Duration::from_millis(20);
-        let handle = tokio::spawn(run(listener, messages.len(), timeout.clone()));
+        let handle = tokio::spawn(run(listener, messages.len(), timeout));
 
         for message in messages {
             let mut socket = tokio::net::TcpStream::connect(addr).await.unwrap();
@@ -46,6 +47,6 @@ mod tests {
 
         let buffered = handle.await.unwrap();
         let buffered = std::str::from_utf8(&buffered).unwrap();
-        assert_eq!(buffered, "");
+        assert_eq!(buffered, "hefrthta");
     }
 }
