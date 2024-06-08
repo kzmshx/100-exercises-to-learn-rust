@@ -1,6 +1,6 @@
 use std::cmp::PartialEq;
 
-struct Ticket {
+pub struct Ticket {
     title: String,
     description: String,
     status: String,
