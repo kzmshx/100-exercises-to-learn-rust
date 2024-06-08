@@ -1,10 +1,9 @@
-use std::borrow::Borrow;
 // TODO: Implement the `fixed_reply` function. It should accept two `TcpListener` instances,
 //  accept connections on both of them concurrently, and always reply clients by sending
 //  the `Display` representation of the `reply` argument as a response.
 use std::fmt::Display;
-use std::sync::{Arc, Mutex};
-use tokio::io::{join, AsyncWriteExt};
+use std::sync::{Arc, RwLock};
+use tokio::io::AsyncWriteExt;
 use tokio::join;
 use tokio::net::TcpListener;
 
@@ -13,24 +12,24 @@ where
     // `T` cannot be cloned. How do you share it between the two server tasks?
     T: Display + Send + Sync + 'static,
 {
-    let reply_pointer = Arc::new(Mutex::new(reply));
-    let handle1 = tokio::spawn(reply_each(first, reply_pointer.clone()));
-    let handle2 = tokio::spawn(reply_each(second, reply_pointer.clone()));
-    let (result1, result2) = join!(handle1, handle2);
-    result1.unwrap().unwrap();
-    result2.unwrap().unwrap();
+    let reply = Arc::new(RwLock::new(reply));
+    let (r1, r2) = join!(
+        tokio::spawn(_fixed_reply(first, reply.clone())),
+        tokio::spawn(_fixed_reply(second, reply.clone()))
+    );
+    r1.unwrap();
+    r2.unwrap();
 }
 
-async fn reply_each<T: Display + Send + Sync + 'static>(
+async fn _fixed_reply<T: Display + Send + Sync + 'static>(
     listener: TcpListener,
-    reply: Arc<Mutex<T>>,
-) -> Result<(), anyhow::Error> {
+    reply: Arc<RwLock<T>>,
+) {
     loop {
-        let (mut socket, _) = listener.accept().await?;
-        let (_, mut writer) = socket.split();
-        writer
-            .write_all(format!("{}", reply.lock().unwrap()).as_bytes())
-            .await?;
+        let (mut s, _) = listener.accept().await.unwrap();
+        let (_, mut w) = s.split();
+        let reply = format!("{}", reply.read().unwrap());
+        w.write_all(reply.as_bytes()).await.unwrap();
     }
 }
 
