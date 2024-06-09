@@ -35,3 +35,9 @@ impl TicketStore {
         self.tickets.get(&id)
     }
 }
+
+impl Default for TicketStore {
+    fn default() -> Self {
+        Self::new()
+    }
+}

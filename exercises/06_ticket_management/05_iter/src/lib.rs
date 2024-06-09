@@ -1,9 +1,10 @@
 use ticket_fields::{TicketDescription, TicketTitle};
 
-// TODO: Provide an `iter` method that returns an iterator over `&Ticket` items.
-#[derive(Clone)]
-pub struct TicketStore {
-    tickets: Vec<Ticket>,
+#[derive(Clone, Debug, Copy, PartialEq)]
+pub enum Status {
+    ToDo,
+    InProgress,
+    Done,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -13,11 +14,10 @@ pub struct Ticket {
     status: Status,
 }
 
-#[derive(Clone, Debug, Copy, PartialEq)]
-pub enum Status {
-    ToDo,
-    InProgress,
-    Done,
+// TODO: Provide an `iter` method that returns an iterator over `&Ticket` items.
+#[derive(Clone)]
+pub struct TicketStore {
+    tickets: Vec<Ticket>,
 }
 
 impl TicketStore {
@@ -29,6 +29,10 @@ impl TicketStore {
 
     pub fn add_ticket(&mut self, ticket: Ticket) {
         self.tickets.push(ticket);
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = &Ticket> {
+        self.tickets.iter()
     }
 }
 

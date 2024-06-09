@@ -8,13 +8,21 @@
 
 use ticket_fields::{TicketDescription, TicketTitle};
 
-#[derive(Clone)]
-pub struct TicketStore {
-    tickets: Vec<Ticket>,
-}
-
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct TicketId(u64);
+
+#[derive(Clone, Debug, Copy, PartialEq)]
+pub enum Status {
+    ToDo,
+    InProgress,
+    Done,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct TicketDraft {
+    pub title: TicketTitle,
+    pub description: TicketDescription,
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Ticket {
@@ -24,28 +32,39 @@ pub struct Ticket {
     pub status: Status,
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct TicketDraft {
-    pub title: TicketTitle,
-    pub description: TicketDescription,
-}
-
-#[derive(Clone, Debug, Copy, PartialEq)]
-pub enum Status {
-    ToDo,
-    InProgress,
-    Done,
+#[derive(Clone)]
+pub struct TicketStore {
+    tickets: Vec<Ticket>,
+    ticket_counter: u64,
 }
 
 impl TicketStore {
     pub fn new() -> Self {
         Self {
             tickets: Vec::new(),
+            ticket_counter: 0,
         }
     }
 
-    pub fn add_ticket(&mut self, ticket: Ticket) {
-        self.tickets.push(ticket);
+    pub fn add_ticket(&mut self, draft: TicketDraft) -> TicketId {
+        let new_ticket = &Ticket {
+            id: self.next_ticket_id(),
+            title: draft.title,
+            description: draft.description,
+            status: Status::ToDo,
+        };
+        self.tickets.push(new_ticket.to_owned());
+
+        new_ticket.id
+    }
+
+    pub fn get(&mut self, id: TicketId) -> Option<&Ticket> {
+        self.tickets.iter().find(|t| t.id == id)
+    }
+
+    fn next_ticket_id(&mut self) -> TicketId {
+        self.ticket_counter += 1;
+        TicketId(self.ticket_counter)
     }
 }
 
