@@ -34,7 +34,7 @@ mod tests {
     use ticket_fields::{TicketDescription, TicketTitle};
 
     #[tokio::test]
-    async fn hello() {
+    async fn hello_ok() {
         // Arrange
         let db = setup_db().await;
         // Act
@@ -46,7 +46,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn tickets_list() {
+    async fn tickets_list_ok() {
         // Arrange
         let db = setup_db().await;
         // Act
@@ -57,7 +57,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn tickets_create() {
+    async fn tickets_create_ok() {
         // Arrange
         let db = setup_db().await;
         // Act
@@ -77,7 +77,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn tickets_get() {
+    async fn tickets_get_ok() {
         // Arrange
         let db = setup_db().await;
         let req = warp::test::request().method("GET").path("/tickets");
@@ -101,7 +101,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn tickets_update() {
+    async fn tickets_update_ok() {
         // Arrange
         let db = setup_db().await;
         let req = warp::test::request()
