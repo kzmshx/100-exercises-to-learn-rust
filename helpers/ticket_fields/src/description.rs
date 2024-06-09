@@ -1,6 +1,12 @@
 #[derive(Debug, PartialEq, Clone, Eq)]
 pub struct TicketDescription(String);
 
+impl std::fmt::Display for TicketDescription {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[derive(Debug, thiserror::Error)]
 pub enum TicketDescriptionError {
     #[error("The description cannot be empty")]
